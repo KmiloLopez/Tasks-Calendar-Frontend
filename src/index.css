@@ -1,0 +1,49 @@
+/* setup de tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* setup del fondo */
+body {
+  background: #202020;
+  color: white;
+}
+
+.calendar {
+  /* Estilos generales del calendario */
+  
+  width: 1000px;
+}
+
+.navigation {
+  /* Estilos para la barra de navegación del calendario */
+  background-color: grey;
+}
+
+.days-grid {
+ 
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: repeat(7, 1fr); 
+  
+}
+
+.box {
+  color: white;
+  text-align: center;
+  width: 100%;
+}
+.day, .empty {
+  border: 3px solid #ccc; /* Borde de las celdas */
+   padding: 10px;  /*Espaciado interior*/
+ 
+}
+:hover.day{
+  border-color: aqua;
+}
+
+.row {
+  display: flex;
+  /* 
+  flex-direction: column; */
+}
