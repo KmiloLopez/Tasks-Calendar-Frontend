@@ -9,6 +9,7 @@ import { TaskFormPage } from "./pages/TaskFormPage";
 import { LoginPage } from "./pages/LoginPage";
 import { TasksPage } from "./pages/TasksPage";
 import { TaskProvider } from "./context/tasksContext";
+import { SelectDayProvider } from "./context/selectDayContext";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
     //al agregar navbar todos ven los opciones
     <AuthProvider>
       <TaskProvider>
+        <SelectDayProvider>
         <BrowserRouter>
           <main className="container content-container mx-auto px-10 md:px-0">
             <Navbar />
@@ -33,6 +35,7 @@ function App() {
             </Routes>
           </main>
         </BrowserRouter>
+        </SelectDayProvider>
       </TaskProvider>
     </AuthProvider>
   );

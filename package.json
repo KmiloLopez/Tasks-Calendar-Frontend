@@ -18,7 +18,14 @@
     "react-hook-form": "^7.51.4",
     "react-icons": "^5.2.0",
     "react-router-dom": "^6.23.0",
-    "zod": "^3.23.6"
+    "zod": "^3.23.6",
+
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/icons-material": "^5.15.17",
+    "@mui/x-date-pickers": "^7.3.2"
+    
+  
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.17.0",
