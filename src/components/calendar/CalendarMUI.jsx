@@ -9,7 +9,7 @@ import WysiwygIcon from '@mui/icons-material/Wysiwyg';
 import dayjs from 'dayjs' // ES 2015
 dayjs().format()
 
-
+//AHORA SI ESTO SOLO LO VEO EN CALENDAR-DAY-STATE
 function ServerDay(props) {// from MUI documentation
 	const { highlightedDays = [], day, outsideCurrentMonth, ...other } = props;
   
