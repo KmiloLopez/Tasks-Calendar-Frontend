@@ -1,15 +1,17 @@
-import React, {useState, useEffect} from 'react';
-import { DateCalendar, DatePicker } from '@mui/x-date-pickers';
+import React, {useState, useEffect, useContext} from 'react';
+import { DateCalendar} from '@mui/x-date-pickers';
 import Badge from '@mui/material/Badge';
 import { PickersDay } from '@mui/x-date-pickers/PickersDay';
-import ShortTextIcon from '@mui/icons-material/ShortText';
-import EventNoteIcon from '@mui/icons-material/EventNote';
+import {SelectedDateContext} from '../../context/selectDayContext.jsx';
+import { Link } from "react-router-dom";
+
 import WysiwygIcon from '@mui/icons-material/Wysiwyg';
 
 import dayjs from 'dayjs' // ES 2015
+import { getTasksRequestByDate } from '../../api/tasks.js';
 dayjs().format()
 
-//AHORA SI ESTO SOLO LO VEO EN CALENDAR-DAY-STATE
+
 function ServerDay(props) {// from MUI documentation
 	const { highlightedDays = [], day, outsideCurrentMonth, ...other } = props;
   
@@ -25,6 +27,7 @@ function ServerDay(props) {// from MUI documentation
 			vertical: 'top',
 			horizontal: 'left',
 		  }}
+        
 	  >
 		<PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth} day={day} />
 	  </Badge>
@@ -33,17 +36,28 @@ function ServerDay(props) {// from MUI documentation
 
 const CalendarMUI = () => {
     const [highlightedDays, setHighlightedDays] = useState([1, 2, 15]);
-    const [daySelected, setdaySelected] = useState(new Date());
-//comentario agregado en calendar-day-state
-    let date = daySelected.$d
-    console.log(typeof(date)) 
+    const { dayselected, setDaySelected } = useContext(SelectedDateContext);
+    const [displayDate, setDisplayDate] = useState(0);
+  const test = {
+    $D:"5"
+  }
+    console.log(typeof(dayselected)) 
+ 
+   const printDate =(dayselected)=>{
+    const valuesArray = Object.values(dayselected);
 
-    useEffect(() =>{
-        console.log("uasdofan", daySelected.$d)
-    },[daySelected])
+    const newt= JSON.stringify(valuesArray[2]).split('T')[0].slice(1);
+   
+     setDisplayDate(newt);
+     console.log("new date",newt);
+     getTasksRequestByDate(newt);
+     
+   }
+    
   
   return (
-    <DateCalendar onChange={setdaySelected} 
+    <>
+    <DateCalendar onChange={printDate} 
 				slots={{
           day: ServerDay,
         }}
@@ -52,7 +66,11 @@ const CalendarMUI = () => {
             highlightedDays,
           },
         }}/>
+        <h1>{dayselected.$D}</h1>
+        <h1>{displayDate}</h1>
+    </>
   )
 }
 
 export default CalendarMUI
+
