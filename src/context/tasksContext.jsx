@@ -5,6 +5,7 @@ import {
   getTasksRequest,
   getTaskRequest,
   updateTaskRequest,
+  getTasksRequestByDate,
 } from "../api/tasks";
 
 const TaskContext = createContext();
@@ -22,6 +23,11 @@ export function TaskProvider({ children }) {
     const res = await getTasksRequest();
     setTasks(res.data);
   };
+  
+  const getTasksOnDate = async (id) => {
+    const res = await getTasksRequestByDate(id);
+    setTasks(res.data);
+  };
 
   const deleteTask = async (id) => {
     try {
@@ -34,6 +40,7 @@ export function TaskProvider({ children }) {
 
   const createTask = async (task) => {
     try {
+      console.log("createTask request width", task);
       const res = await createTaskRequest(task);
       console.log(res.data);
     } catch (error) {
@@ -68,6 +75,7 @@ export function TaskProvider({ children }) {
         createTask,
         getTask,
         updateTask,
+        getTasksOnDate
       }}
     >
       {children}

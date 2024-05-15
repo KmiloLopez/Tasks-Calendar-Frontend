@@ -7,14 +7,14 @@ export const SelectedDateContext = createContext();
 
 
 export function SelectDayProvider({ children }) {
-  const [dayselected, setDayselected] = useState(new Date());
+  const [dayselected, setDaySelected] = useState(new Date());
 
  
   return (
     <SelectedDateContext.Provider
       value={{// este es el retorno o lo que exporta
         dayselected,
-        setDayselected,
+        setDaySelected
       
         
       }}

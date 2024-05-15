@@ -29,17 +29,18 @@ export function TaskFormPage() {
         });
       } else {
         if(data.date) {
-          console.log("nueva tarea")
+          console.log("nueva tarea para fecha", data.date)
+          
           createTask({
             ...data,
-            date: dayjs.utc(data.date).format(),
+            date: dayjs(data.date).format("YYYY-MM-DDTHH:mm:ss.SSS[Z]"),//formateo fecha para que concuerde con el formato del backend schema(modelo)
           });
 
         }else{
           console.log("no se ingreso fecha asignando el dia de hoy2")
           createTask({
             ...data,
-            date: dayjs.utc().format(),
+            date: dayjs.utc().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]"),
           });
           
         }

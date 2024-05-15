@@ -41,16 +41,16 @@ const CalendarMUI = () => {
   const test = {
     $D:"5"
   }
-    console.log(typeof(dayselected)) 
+  
  
-   const printDate =(dayselected)=>{
-    const valuesArray = Object.values(dayselected);
-
-    const newt= JSON.stringify(valuesArray[2]).split('T')[0].slice(1);
-   
-     setDisplayDate(newt);
-     console.log("new date",newt);
-     getTasksRequestByDate(newt);
+   const printDate =(dayselectedCalendar)=>{
+        const valuesArray = Object.values(dayselectedCalendar);
+        setDaySelected(dayselectedCalendar);
+        const newt= JSON.stringify(valuesArray[2]).split('T')[0].slice(1);
+      
+        setDisplayDate(newt);
+        console.log("new date",newt);
+        //getTasksRequestByDate(newt);
      
    }
     
