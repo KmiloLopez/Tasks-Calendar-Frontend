@@ -66,8 +66,7 @@ const CalendarMUI = () => {
             highlightedDays,
           },
         }}/>
-        <h1>{dayselected.$D}</h1>
-        <h1>{displayDate}</h1>
+        
     </>
   )
 }

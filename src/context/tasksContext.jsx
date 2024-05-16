@@ -59,8 +59,10 @@ export function TaskProvider({ children }) {
 
   const updateTask = async (id, task) => {
     try {
-      console.log("id++",id)
-      await updateTaskRequest(id, task);
+      console.log("updating task with id:",id)
+
+        await updateTaskRequest(id, task);
+      
     } catch (error) {
       console.error(error);
     }
