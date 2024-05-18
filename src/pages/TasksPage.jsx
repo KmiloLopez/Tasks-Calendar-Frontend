@@ -7,8 +7,13 @@ import dayjs from "dayjs";
 import CalendarMUI from "../components/calendar/CalendarMUI";
 import { SelectedDateContext } from "../context/selectDayContext";
 import { UpdateTaskContext } from "../context/updatetaskContext";
+import { Button, ButtonLink } from "../components/ui";
+import ThemeButton from "../components/buttons/ThemeButton";
+
+
 
 export function TasksPage() {
+ 
   const { tasks, getTasks, getTasksOnDate } = useTasks();
   const { dayselected } = useContext(SelectedDateContext);
   const [isDaySelected, setIsDaySelected] = useState(false);
@@ -50,12 +55,18 @@ export function TasksPage() {
       </div>
       <h1>{todaysD}</h1>
       {tasks.length === 0 && (
-        <div className="flex justify-center items-center p-10">
+        <div className="flex justify-center items-center p-10 ">
           <div>
             <ImFileEmpty className="text-6xl text-gray-400 m-auto my-2" />
             <h1 className="font-bold text-xl">
               No tasks yet, please add a new task
             </h1>
+            <ButtonLink to="/add-task"
+          
+           
+            
+            >Add Task</ButtonLink>
+            
           </div>
         </div>
       )}
@@ -68,6 +79,8 @@ export function TasksPage() {
       ) : (
         <h1>Selecciona el dia</h1>
       )}
+      
+      <ThemeButton>ThemeCHANGE</ThemeButton>
     </>
   );
 }

@@ -7,6 +7,8 @@ import {
   updateTaskRequest,
   getTasksRequestByDate,
 } from "../api/tasks";
+import Notiflix from 'notiflix';
+
 
 const TaskContext = createContext();
 
@@ -43,6 +45,9 @@ export function TaskProvider({ children }) {
       console.log("createTask request width", task);
       const res = await createTaskRequest(task);
       console.log(res.data);
+      Notiflix.Notify.success('Task created successfully');
+      
+      
     } catch (error) {
       console.log(error);
     }

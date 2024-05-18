@@ -9,23 +9,22 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
     "@hookform/resolvers": "^3.3.4",
+    "@mui/icons-material": "^5.15.17",
+    "@mui/x-date-pickers": "^7.3.2",
     "axios": "^1.6.8",
     "dayjs": "^1.11.11",
     "js-cookie": "^3.0.5",
+    "normalize.css": "^8.0.1",
+    "notiflix": "^3.2.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.4",
     "react-icons": "^5.2.0",
     "react-router-dom": "^6.23.0",
-    "zod": "^3.23.6",
-
-    "@emotion/react": "^11.11.4",
-    "@emotion/styled": "^11.11.5",
-    "@mui/icons-material": "^5.15.17",
-    "@mui/x-date-pickers": "^7.3.2"
-    
-  
+    "zod": "^3.23.6"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.17.0",
@@ -34,6 +33,7 @@
     "autoprefixer": "^10.4.19",
     "jsdom": "^22.1.0",
     "postcss": "^8.4.38",
+    "prettier": "^3.2.5",
     "tailwindcss": "^3.4.3",
     "vite": "^4.4.7",
     "vitest": "^0.33.0"

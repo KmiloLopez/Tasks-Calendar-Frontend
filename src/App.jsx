@@ -11,23 +11,26 @@ import { TasksPage } from "./pages/TasksPage";
 import { TaskProvider } from "./context/tasksContext";
 import { SelectDayProvider } from "./context/selectDayContext";
 import { UpdateTaskCProvider } from "./context/updatetaskContext";
+import theme from "./style/themeColors";
+import { ThemeProvider} from "@mui/material";
 
 function App() {
   return (
     //viene de context authContext//dan un estado que puede ser accedido desde todos los componentes
     //al agregar navbar todos ven los opciones
     <AuthProvider>
+      <ThemeProvider theme={theme}>
       <TaskProvider>
         <UpdateTaskCProvider>
         <SelectDayProvider>
         <BrowserRouter>
-          <main className="container content-container mx-auto px-10 md:px-0">
+          <main className="container content-container mx-auto px-3 md:px-0 ">
             <Navbar />
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
-              {/* engloba rutas para que se verifique si esta autorizado para entrar */}
+              {/* engloba rutas verificacion de autorizacion */}
               <Route element={<ProtectedRoute />}>
                 <Route path="/tasks" element={<TasksPage />} />
                 <Route path="/add-task" element={<TaskFormPage />} />
@@ -40,6 +43,7 @@ function App() {
         </SelectDayProvider>
         </UpdateTaskCProvider>
       </TaskProvider>
+      </ThemeProvider>
     </AuthProvider>
   );
 }

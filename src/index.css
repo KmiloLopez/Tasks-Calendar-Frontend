@@ -1,11 +1,20 @@
+@import-normalize;
 /* setup de tailwind */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --color-primary: #1976d2;
+  --color-secondary: #dc004e;
+  --color-success: #4caf50;
+  /* Define otros colores según sea necesario */
+}
+
 /* setup del fondo */
 body {
-  background: #202020;
+  @apply dark:bg-neutral-900;
+  /* background: #202020; */
   color: white;
 }
 
