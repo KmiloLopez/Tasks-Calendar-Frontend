@@ -11,8 +11,9 @@ import { Button, ButtonLink } from "../components/ui";
 import ThemeButton from "../components/buttons/ThemeButton";
 
 export function TasksPage() {
-  const { tasks, getTasks, getTasksOnDate } = useTasks();
-  const { dayselected } = useContext(SelectedDateContext);
+  const { tasks, getTasks, getTasksOnDate, getTasksOnMonth, daysOnMonth } =
+    useTasks();
+  const { dayselected, selectedMonthYear } = useContext(SelectedDateContext);
   const [isDaySelected, setIsDaySelected] = useState(false);
   const [todaysD, setTodaysD] = useState(null);
   const { taskStatus } = useContext(UpdateTaskContext);
@@ -35,24 +36,44 @@ export function TasksPage() {
         setTodaysD(dayjs(dayselected).format("DD MMM YYYY"));
         getTasksOnDate(dayjs(dayselected).format("YYYY-MM-DD"));
       }
+
+      if (selectedMonthYear) {
+        const dateAdjusted = dayjs(selectedMonthYear).add(0, "month");
+        getTasksOnMonth(dateAdjusted);
+      } else {
+        const todaysDate = dayjs().format("YYYY-MM-DD");
+        getTasksOnMonth(todaysDate);
+      }
     } else {
       setIsDaySelected(true);
 
-      console.log("el FirstRender");
+      console.log("el FirstRender", daysOnMonth);
 
       const todaysDate = dayjs().format("YYYY-MM-DD");
       setTodaysD(dayjs().format("DD MMM YYYY"));
       getTasksOnDate(todaysDate); //newdateformat= 2024-05-15
       setFirstRender(false); // Si es la primera renderización, marca que ya no lo es
+      console.log("haciendo peticion con:", todaysDate);
+
+      getTasksOnMonth(todaysDate);
     }
-  }, [dayselected, taskStatus]); //con el cambio de taskStatus se hace una nueva renderizacion de tasks para mostrar si la tarea se completo
+  }, [dayselected, taskStatus, selectedMonthYear]); //con el cambio de taskStatus se hace una nueva renderizacion de tasks para mostrar si la tarea se completo
+
+  useEffect(() => {
+    console.log("aca esta daysonmonth", daysOnMonth);
+  }, [daysOnMonth]);
 
   return (
     <>
       <div className="bg-slate-500">
-        <CalendarMUI />
+        <CalendarMUI daysonmonth={daysOnMonth} />
       </div>
-      <h1>{todaysD}</h1>
+      <section className="flex justify-center gap-5 my-1">
+        <h1 className="font-bold text-xl text-gray-400">{todaysD}</h1>
+        <ButtonLink to="/add-task" style={{}}>
+          Add Task
+        </ButtonLink>
+      </section>
       {tasks.length === 0 && (
         <div className="flex justify-center items-center p-10 ">
           <div>
@@ -60,7 +81,6 @@ export function TasksPage() {
             <h1 className="font-bold text-xl">
               No tasks yet, please add a new task
             </h1>
-            <ButtonLink to="/add-task">Add Task</ButtonLink>
           </div>
         </div>
       )}

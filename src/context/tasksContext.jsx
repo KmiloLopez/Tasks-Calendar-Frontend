@@ -6,6 +6,7 @@ import {
   getTaskRequest,
   updateTaskRequest,
   getTasksRequestByDate,
+  getMonthTasksRequestByDate,
 } from "../api/tasks";
 import Notiflix from "notiflix";
 
@@ -19,6 +20,7 @@ export const useTasks = () => {
 
 export function TaskProvider({ children }) {
   const [tasks, setTasks] = useState([]);
+  const [daysOnMonth, setDaysOnMonth] = useState([]);
 
   const getTasks = async () => {
     const res = await getTasksRequest();
@@ -28,6 +30,11 @@ export function TaskProvider({ children }) {
   const getTasksOnDate = async (id) => {
     const res = await getTasksRequestByDate(id);
     setTasks(res.data);
+  };
+  const getTasksOnMonth = async (id) => {
+    const res = await getMonthTasksRequestByDate(id);
+    console.log("esta es la respuesta del servidor res:", res.data);
+    setDaysOnMonth(res.data);
   };
 
   const deleteTask = async (id) => {
@@ -77,12 +84,14 @@ export function TaskProvider({ children }) {
       value={{
         // este es el retorno o lo que exporta
         tasks,
+        daysOnMonth,
         getTasks,
         deleteTask,
         createTask,
         getTask,
         updateTask,
         getTasksOnDate,
+        getTasksOnMonth,
       }}
     >
       {children}
