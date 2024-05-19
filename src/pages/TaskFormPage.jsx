@@ -5,12 +5,13 @@ import utc from "dayjs/plugin/utc";
 import { Button, Input } from "../components/ui";
 import { useTasks } from "../context/tasksContext";
 import { Textarea } from "../components/ui/Textarea";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { MobileTimePicker } from "@mui/x-date-pickers";
 import CardComp from "../components/card/CardComp";
 import ButtonLinkX from "../components/buttons/ButtonLinkX";
 import "../style/newtaskstyle.css";
 import { SelectedDateContext } from "../context/selectDayContext";
+import TaskComponent from "../components/selectpriority/SelectPriority";
 
 dayjs.extend(utc);
 
@@ -20,6 +21,7 @@ export function TaskFormPage() {
   const [selectedTimeout, setSelectedTimeout] = useState(null); //dayjs('2022-04-17T15:30')
   const [showTimeFrame, setShowTimeFrame] = useState(false);
   const navigate = useNavigate();
+
   const { dayselected } = useContext(SelectedDateContext);
   const params = useParams();
 
@@ -29,8 +31,13 @@ export function TaskFormPage() {
   //const defaultDate = dayjs().format("YYYY-MM-DD");
   const defaultDate = dayjs(dayselected).format("YYYY-MM-DD");
   //const defaultTime = {"00:00 AM"};
-
+  // const options = [
+  //   { value: "Low", label: "Low" },
+  //   { value: "Medium", label: "Medium" },
+  //   { value: "High", label: "High" },
+  // ];
   const {
+    control,
     reset,
     register,
     setValue, // permite establecer los campos de el form
@@ -39,24 +46,26 @@ export function TaskFormPage() {
   } = useForm({
     defaultValues: {
       date: defaultDate,
+      //priority: options[0], // Valor predeterminado
     },
   }); //importacion de regiter, handleSubmit desde el useForm
 
   //const defaultDate = dayjs("2022-04-17T15:30").format("mm-dd-yyyy");
   const onSubmit = async (data) => {
     //data son los datos de los campos del form
-    console.log("data:", data);
-    console.log("data.time", data.time);
-    console.log("data.timeout", data.timeout);
 
     try {
       if (params.id) {
         //si params.id existe esto indica que estamos editando si no existe estamos creando
+        console.log("esto es params", params);
         console.log("esto es params.id", params.id);
+        console.log("esto es data", data);
         updateTask(params.id, {
           ...data,
           date: dayjs.utc(data.date).format(), //formateo fecha para que concuerde con el formato del backend schema(modelo)
         });
+
+        navigate("/tasks");
       } else {
         if (
           data.time === undefined ||
@@ -169,7 +178,9 @@ export function TaskFormPage() {
     <>
       <div className="w-full flex justify-center">
         <CardComp>
-          <h1 className="text-center text-3xl font-bold">CREATE NEW TASK</h1>
+          <h1 className="text-center text-3xl font-bold">
+            {params.id ? "UPDATE TASK" : "CREATE NEW TASK"}
+          </h1>
           <div className="absolute top-1 right-2">
             <ButtonLinkX to="/tasks">X</ButtonLinkX>
           </div>
@@ -198,6 +209,17 @@ export function TaskFormPage() {
               {...register("description")}
             ></Textarea>
 
+            {/* <section>
+              <label htmlFor="priority">Priority Level</label>
+              <Controller
+                name="priority"
+                control={control}
+                render={({ field }) => (
+                  <TaskComponent register={register} field={field} />
+                )}
+              />
+            </section> */}
+
             <section className="flex gap-5">
               <label htmlFor="priority">Priority:</label>
               <select
@@ -205,15 +227,23 @@ export function TaskFormPage() {
                 name="priority"
                 {...register("priority")}
               >
-                <option className="bg-lime-400 dark:bg-slate-400" value="Low">
+                <option className="bg-blue-700 " value="Low">
                   Low
                 </option>
-                <option value="Medium">Medium</option>
-                <option value="High">High</option>
+                <option className="bg-orange-700" value="Medium">
+                  Medium
+                </option>
+                <option className="bg-red-700" value="High">
+                  High
+                </option>
               </select>
             </section>
-            <button type="button" onClick={handleTimeFrame}>
-              Add Time-Frame
+            <button
+              className="bg-slate-500 px-4 py-1 rounded-md my-2 disabled:bg-indigo-300"
+              type="button"
+              onClick={handleTimeFrame}
+            >
+              {showTimeFrame ? "Hide Time-Frame" : "Add Time-Frame"}
             </button>
             {showTimeFrame ? (
               <>

@@ -14,60 +14,108 @@ import IconButtonComp from "../buttons/IconButton";
 import ButtonLinkComp from "../buttons/ButtonLinkComp";
 import CardComp from "../card/CardComp";
 dayjs.extend(utc);
+//using theme
+import theme from "../../style/themeColors";
+//using theme
 
 export function TaskCard({ task }) {
   const { deleteTask, updateTask, getTasksOnDate } = useTasks();
   const { taskStatus, setTaskStatus } = useContext(UpdateTaskContext);
+  const [isFirstRender, setIsFirstRender] = useState(true);
 
   const dateNew = dayjs.utc(task.date).add(1, "day").format("YYYY-MM-DD"); //correccion de la fecha mostrada en pantalla .add para sumarle un dia
-  
-  
-    let backgroundColorClass = '';
-    
-    switch (task.priority) {
-      case 'High':
-        backgroundColorClass = 'bg-red-500';
-        break;
-      case 'Medium':
-        backgroundColorClass = 'bg-orange-500';
-        break;
-      case 'Low':
-        backgroundColorClass = 'bg-blue-500';
-        break;
-      default:
-        backgroundColorClass = 'bg-blue-500';
-        break;
-    }
 
-    let completedbackgroundColorClass ='';
-    if(task.status) {
-      
-        completedbackgroundColorClass = 'bg-green-500';
-      }else{
-        completedbackgroundColorClass = '';
-      }
-   
-  
+  let backgroundColorClass = "";
+
+  switch (task.priority) {
+    case "High":
+      backgroundColorClass = "bg-red-700";
+      break;
+    case "Medium":
+      backgroundColorClass = "bg-orange-700";
+      break;
+    case "Low":
+      backgroundColorClass = "bg-blue-700";
+      break;
+    default:
+      backgroundColorClass = "bg-blue-700";
+      break;
+  }
+
+  let completedbackgroundColorClass = "";
+  if (task.status) {
+    completedbackgroundColorClass = "bg-green-500";
+  } else {
+    completedbackgroundColorClass = "";
+  }
+
+  const handleTaskStatus = () => {
+    console.log("handleTaskStatus Clicked this is task", task);
+    const currrentTaskSatus = task.status;
+    const formcard = "true";
+    const updatedTask = { ...task, status: !currrentTaskSatus }; // Actualiza el estado de la tarea
+    updateTask(task._id, updatedTask, formcard);
+    setTaskStatus(!taskStatus);
+  };
+
   return (
     <CardComp>
-      <header className={`flex justify-between p-0 items-center ${completedbackgroundColorClass}`}>
-        
-        <h2 className="text-4xl font-bold">{task.status?"COMPLETED":"PENDING"}</h2>
-        <div className="flex gap-x-1 items-center">
-          
-          <IconButtonComp onClick={() => deleteTask(task._id)}>
-            <DeleteIcon />
-          </IconButtonComp>
+      <header
+        className={`flex justify-between p-0 items-center rounded ${completedbackgroundColorClass}`}
+      >
+        <h2 className="text-4xl font-bold text-slate-700">
+          {task.status ? "COMPLETED" : "PENDING"}
+        </h2>
+        {task.status ? (
+          <div className="flex gap-x-1 items-center">
+            <IconButtonComp onClick={() => deleteTask(task._id)}>
+              <DeleteIcon
+                sx={{
+                  color: "cardicons.main",
+                  ":hover": {
+                    color: "cardicons.main",
+                  },
+                }}
+              />
+            </IconButtonComp>
 
-          <ButtonLinkComp to={`/tasks/${task._id}`}>
-            <IconButton>
-              <DriveFileRenameOutlineIcon />
-            </IconButton>
-          </ButtonLinkComp>
-        </div>
+            <ButtonLinkComp to={`/tasks/${task._id}`}>
+              <IconButton>
+                <DriveFileRenameOutlineIcon
+                  sx={{
+                    color: "cardicons.main",
+                    ":hover": {
+                      color: "cardicons.main",
+                    },
+                  }}
+                />
+              </IconButton>
+            </ButtonLinkComp>
+          </div>
+        ) : (
+          <div className="flex gap-x-1 items-center">
+            <IconButtonComp onClick={() => deleteTask(task._id)}>
+              <DeleteIcon
+                sx={{
+                  color: "cardicons.main",
+                }}
+              />
+            </IconButtonComp>
+
+            <ButtonLinkComp to={`/tasks/${task._id}`}>
+              <IconButton>
+                <DriveFileRenameOutlineIcon
+                  sx={{
+                    color: "cardicons.main",
+                  }}
+                />
+              </IconButton>
+            </ButtonLinkComp>
+          </div>
+        )}
       </header>
       <h1 className="text-2xl font-bold">{task.title}</h1>
-        
+
       <p className="text-slate-300">{task.description}</p>
       <section>
         <p className="text-slate-400 text-2xl">
@@ -76,20 +124,31 @@ export function TaskCard({ task }) {
       </section>
       <section className={`text-1xl font-bold ${backgroundColorClass} rounded`}>
         <p>Priority: {task.priority}</p>
-        </section>
-      
-      <div>
-        <IconButton
-          onClick={() => {
-            setTaskStatus(!taskStatus);
-            const updatedTask = { ...task, status: taskStatus }; // Actualiza el estado de la tarea
-            updateTask(task._id, updatedTask);
-            getTasksOnDate();
-          }}
-        >
-          {task.status ? <TaskAltIcon /> : <RadioButtonUncheckedIcon />}
+      </section>
+
+      <section className="flex justify-end text-slate-300">
+        <IconButton onClick={handleTaskStatus}>
+          {task.status ? (
+            <TaskAltIcon
+              sx={{
+                color: "completed.main",
+                ":hover": {
+                  color: "completedhover.main",
+                },
+              }}
+            />
+          ) : (
+            <RadioButtonUncheckedIcon
+              sx={{
+                color: "pending.main",
+                ":hover": {
+                  color: "completedhover.main",
+                },
+              }}
+            />
+          )}
         </IconButton>
-      </div>
+      </section>
     </CardComp>
   );
 }

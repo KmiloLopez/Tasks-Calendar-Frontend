@@ -16,6 +16,24 @@ const theme = createTheme({
     success: {
       main: "#0bb6c2",
     },
+    completed: {
+      main: "#22c55e",
+    },
+    completedhover: {
+      main: "#eaf8ef",
+    },
+    pending: {
+      main: "#1ca34e",
+    },
+    pendinghover: {
+      main: "#eaf8ef",
+    },
+    cardicons: {
+      main: "#334155",
+    },
+    cardicondhover: {
+      main: "#334155",
+    },
   },
 });
 

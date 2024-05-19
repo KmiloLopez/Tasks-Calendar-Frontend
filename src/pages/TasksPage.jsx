@@ -10,15 +10,12 @@ import { UpdateTaskContext } from "../context/updatetaskContext";
 import { Button, ButtonLink } from "../components/ui";
 import ThemeButton from "../components/buttons/ThemeButton";
 
-
-
 export function TasksPage() {
- 
   const { tasks, getTasks, getTasksOnDate } = useTasks();
   const { dayselected } = useContext(SelectedDateContext);
   const [isDaySelected, setIsDaySelected] = useState(false);
   const [todaysD, setTodaysD] = useState(null);
-  const { taskStatus} = useContext(UpdateTaskContext);
+  const { taskStatus } = useContext(UpdateTaskContext);
   const [firstRender, setFirstRender] = useState(true); // Variable de control
   const params = useParams();
 
@@ -27,26 +24,28 @@ export function TasksPage() {
     if (!firstRender) {
       setIsDaySelected(true);
 
-      const valuesArray = Object.values(dayselected);//extraccion de values en objeto
-      console.log("valuesArray", valuesArray)
-      const newt = JSON.stringify(valuesArray[2]).split("T")[0].slice(1);//cambio formato hora
-      setTodaysD(dayjs(newt).format("DD MMM YYYY"))
-      
-      getTasksOnDate(newt);
+      if (!dayselected) {
+        console.log("dayselected1", dayselected);
+        setTodaysD(dayjs().format("YYYY-MM-DD"));
+        getTasksOnDate(dayjs().format("YYYY-MM-DD"));
+      } else {
+        console.log("dayselected2", dayselected);
 
+        // const newt = JSON.stringify(valuesArray[2]).split("T")[0].slice(1); //cambio formato hora
+        setTodaysD(dayjs(dayselected).format("DD MMM YYYY"));
+        getTasksOnDate(dayjs(dayselected).format("YYYY-MM-DD"));
+      }
     } else {
       setIsDaySelected(true);
-      
-      console.log("el FR");
-      const todaysdate = new Date
-      let newdateformat = JSON.stringify(todaysdate).split("T")[0].slice(1);
-      console.log("todaysdate", todaysdate);
-      setTodaysD(dayjs(newdateformat).format("DD MMM YYYY"))
 
-      getTasksOnDate(newdateformat);//newdateformat= 2024-05-15
-      setFirstRender(false);// Si es la primera renderización, marca que ya no lo es
+      console.log("el FirstRender");
+
+      const todaysDate = dayjs().format("YYYY-MM-DD");
+      setTodaysD(dayjs().format("DD MMM YYYY"));
+      getTasksOnDate(todaysDate); //newdateformat= 2024-05-15
+      setFirstRender(false); // Si es la primera renderización, marca que ya no lo es
     }
-  }, [dayselected, taskStatus]);//con el cambio de taskStatus se hace una nueva renderizacion de tasks para mostrar si la tarea se completo
+  }, [dayselected, taskStatus]); //con el cambio de taskStatus se hace una nueva renderizacion de tasks para mostrar si la tarea se completo
 
   return (
     <>
@@ -61,12 +60,7 @@ export function TasksPage() {
             <h1 className="font-bold text-xl">
               No tasks yet, please add a new task
             </h1>
-            <ButtonLink to="/add-task"
-          
-           
-            
-            >Add Task</ButtonLink>
-            
+            <ButtonLink to="/add-task">Add Task</ButtonLink>
           </div>
         </div>
       )}
@@ -79,7 +73,7 @@ export function TasksPage() {
       ) : (
         <h1>Selecciona el dia</h1>
       )}
-      
+
       <ThemeButton>ThemeCHANGE</ThemeButton>
     </>
   );

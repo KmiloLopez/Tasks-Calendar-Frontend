@@ -7,8 +7,7 @@ import {
   updateTaskRequest,
   getTasksRequestByDate,
 } from "../api/tasks";
-import Notiflix from 'notiflix';
-
+import Notiflix from "notiflix";
 
 const TaskContext = createContext();
 
@@ -25,7 +24,7 @@ export function TaskProvider({ children }) {
     const res = await getTasksRequest();
     setTasks(res.data);
   };
-  
+
   const getTasksOnDate = async (id) => {
     const res = await getTasksRequestByDate(id);
     setTasks(res.data);
@@ -34,7 +33,7 @@ export function TaskProvider({ children }) {
   const deleteTask = async (id) => {
     try {
       const res = await deleteTaskRequest(id);
-      if (res.status === 204) setTasks(tasks.filter((task) => task._id !== id));//esta linea modifica las tareas creado un arreglo nuevo sin incluir la tarea que acabamos de eliminar(cuando se dio click en delete) si no se agrega, si se borra pero solo se ve la modificacion cuando refrescamos la pagina completa
+      if (res.status === 204) setTasks(tasks.filter((task) => task._id !== id)); //esta linea modifica las tareas creado un arreglo nuevo sin incluir la tarea que acabamos de eliminar(cuando se dio click en delete) si no se agrega, si se borra pero solo se ve la modificacion cuando refrescamos la pagina completa
     } catch (error) {
       console.log(error);
     }
@@ -45,9 +44,7 @@ export function TaskProvider({ children }) {
       console.log("createTask request width", task);
       const res = await createTaskRequest(task);
       console.log(res.data);
-      Notiflix.Notify.success('Task created successfully');
-      
-      
+      Notiflix.Notify.success("Task created successfully");
     } catch (error) {
       console.log(error);
     }
@@ -62,12 +59,14 @@ export function TaskProvider({ children }) {
     }
   };
 
-  const updateTask = async (id, task) => {
+  const updateTask = async (id, task, fromcard) => {
     try {
-      console.log("updating task with id:",id)
-
-        await updateTaskRequest(id, task);
-      
+      console.log("updating task with id:", id);
+      await updateTaskRequest(id, task);
+      console.log("ESTO es Task.fromcard en taskContext", fromcard);
+      if (!fromcard) {
+        Notiflix.Notify.success("Task updated successfully");
+      }
     } catch (error) {
       console.error(error);
     }
@@ -75,14 +74,15 @@ export function TaskProvider({ children }) {
 
   return (
     <TaskContext.Provider
-      value={{// este es el retorno o lo que exporta
+      value={{
+        // este es el retorno o lo que exporta
         tasks,
         getTasks,
         deleteTask,
         createTask,
         getTask,
         updateTask,
-        getTasksOnDate
+        getTasksOnDate,
       }}
     >
       {children}

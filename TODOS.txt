@@ -1,0 +1,24 @@
+
+
+
+
+
+
+1. Pendiente implementacion de libreria React-Select, para las opciones de Priority, esto para tener mas opciones de
+personalizacion en colores y tambien necesario cuando traemos las opciones de la lista desde una API y poder agregar 
+nuevas opcionces que no estan en la lista. (en el momento tenemos error, reading .name no allowed)
+es necesario pasarle el {...register("description")} entro del form?
+
+2. badge icons on dates where we have tasks assigned
+
+3.if we don't select the date and we click task completed y display error
+
+4. if Im updating task change name from CREATE NEW TASK to UPDATE TASK,  y cerrar ventana al hacer click en save.
+
+5. Si no hay tareas en el dia, No Tasks yet, Centrar botton.
+
+6. En dia que si hay tareas agregar boton para agregar tarea debajo de el calendario puede ser al lado de la fecha tambien.
+
+7. Boton para ocultar calendario.
+
+8. En pantalla escritorio, mostrar tareas en dias del calendario.
