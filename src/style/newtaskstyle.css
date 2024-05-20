@@ -7,13 +7,63 @@
 .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root {
     color:beige
 }
-.MuiPickersLayout-contentWrapper{
+
+/*CLOCK STYLE PERSONALIZATION*/
+ .MuiPickersLayout-contentWrapper{
     
-    background-color: rgb(240, 201, 201) !important;
+    background-color: rgb(247, 222, 247);
 }
 
 .MuiPickersLayout-root{
    
-    background-color: rgb(247, 222, 247) !important;
+    background-color: rgb(215, 246, 249);
+    
+} 
+.MuiPickersLayout-root{
+   
+    background-color: rgb(215, 246, 249);
+    border-color: rgb(11, 182, 194);
+    border-width: 3px;
+    
+} 
+.css-1ofq6dr-MuiTypography-root-MuiPickersToolbarText-root.Mui-selected{
+    background-color: rgb(11, 182, 194);
+    padding: 4px 4px;
+    border-radius: 50%;
+}
+.css-ihhycx-MuiTimePickerToolbar-amPmSelection .MuiTimePickerToolbar-ampmLabel:hover{
+    background-color: rgb(157, 227, 232);
+    padding-left: 6px;
+    padding-right: 6px;
+    border-radius: 50%;
+}
+.css-d0vs79-MuiClockPointer-root{
+    
+    background-color: rgb(11, 182, 194)!important;
+}
+.css-umzx0k-MuiClock-pin{
+    
+    background-color: rgb(11, 182, 194)!important;
+}
+.css-f53ilk-MuiClockPointer-thumb{
+    border: 16px solid rgb(11, 182, 194)!important;
+    
+}
+.css-1h2qg9i-MuiClockPointer-root{
+    background-color: rgb(11, 182, 194)!important;
+}
+.css-12t0dn4-MuiClockPointer-thumb {
+    border: 16px solid rgb(11, 182, 194)!important;
+}
+
+/*rgb(11, 182, 194)
+rgb(247, 222, 247);
+rgb(240, 201, 201);
+*/
+
+.css-zz7yov-MuiButtonBase-root-MuiIconButton-root {
+    padding: 0px !important;
+    padding-bottom: 0px !important;
+    padding-top: 0px !important;
     
 }

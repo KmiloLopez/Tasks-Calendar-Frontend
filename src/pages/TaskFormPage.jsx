@@ -57,9 +57,7 @@ export function TaskFormPage() {
     try {
       if (params.id) {
         //si params.id existe esto indica que estamos editando si no existe estamos creando
-        console.log("esto es params", params);
-        console.log("esto es params.id", params.id);
-        console.log("esto es data", data);
+
         updateTask(params.id, {
           ...data,
           date: dayjs.utc(data.date).format(), //formateo fecha para que concuerde con el formato del backend schema(modelo)
@@ -261,8 +259,6 @@ export function TaskFormPage() {
                     }}
                     sx={{
                       "& .MuiOutlinedInput-notchedOutline": {
-                        bgcolor: "success.",
-                        color: "success.",
                         borderColor: "success.main",
                       },
                       "& .MuiInputBase-input": {
@@ -274,7 +270,7 @@ export function TaskFormPage() {
                       ":hover": {
                         boxShadow: 6,
                         "& .MuiOutlinedInput-notchedOutline": {
-                          borderColor: "success.main",
+                          borderColor: "white",
                         },
                       },
                     }}
@@ -295,8 +291,6 @@ export function TaskFormPage() {
                     }}
                     sx={{
                       "& .MuiOutlinedInput-notchedOutline": {
-                        bgcolor: "success.",
-                        color: "success.",
                         borderColor: "success.main",
                       },
                       "& .MuiInputBase-input": {
@@ -309,7 +303,7 @@ export function TaskFormPage() {
                       ":hover": {
                         boxShadow: 6,
                         "& .MuiOutlinedInput-notchedOutline": {
-                          borderColor: "success.main",
+                          borderColor: "white",
                         },
                       },
                     }}

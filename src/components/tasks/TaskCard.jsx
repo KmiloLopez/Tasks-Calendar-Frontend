@@ -122,7 +122,9 @@ export function TaskCard({ task }) {
           {task.time} - {task.timeout}
         </p>
       </section>
-      <section className={`text-1xl font-bold ${backgroundColorClass} rounded`}>
+      <section
+        className={`text-1xl font-bold ${backgroundColorClass} rounded w-1/3`}
+      >
         <p>Priority: {task.priority}</p>
       </section>
 

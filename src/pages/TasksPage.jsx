@@ -18,6 +18,8 @@ export function TasksPage() {
   const [todaysD, setTodaysD] = useState(null);
   const { taskStatus } = useContext(UpdateTaskContext);
   const [firstRender, setFirstRender] = useState(true); // Variable de control
+  const [firstRender2, setFirstRender2] = useState(true); // Variable de control
+  const [visibleCalendar, setVisibleCalendar] = useState(true);
   const params = useParams();
 
   useEffect(() => {
@@ -36,13 +38,14 @@ export function TasksPage() {
         setTodaysD(dayjs(dayselected).format("DD MMM YYYY"));
         getTasksOnDate(dayjs(dayselected).format("YYYY-MM-DD"));
       }
-
-      if (selectedMonthYear) {
-        const dateAdjusted = dayjs(selectedMonthYear).add(0, "month");
-        getTasksOnMonth(dateAdjusted);
-      } else {
-        const todaysDate = dayjs().format("YYYY-MM-DD");
-        getTasksOnMonth(todaysDate);
+      if (visibleCalendar) {
+        if (selectedMonthYear) {
+          const dateAdjusted = dayjs(selectedMonthYear).add(0, "month");
+          getTasksOnMonth(dateAdjusted);
+        } else {
+          const todaysDate = dayjs().format("YYYY-MM-DD");
+          getTasksOnMonth(todaysDate);
+        }
       }
     } else {
       setIsDaySelected(true);
@@ -54,22 +57,65 @@ export function TasksPage() {
       getTasksOnDate(todaysDate); //newdateformat= 2024-05-15
       setFirstRender(false); // Si es la primera renderización, marca que ya no lo es
       console.log("haciendo peticion con:", todaysDate);
-
-      getTasksOnMonth(todaysDate);
+      if (visibleCalendar) {
+        getTasksOnMonth(todaysDate);
+      }
     }
-  }, [dayselected, taskStatus, selectedMonthYear]); //con el cambio de taskStatus se hace una nueva renderizacion de tasks para mostrar si la tarea se completo
+  }, [dayselected, selectedMonthYear]); //con el cambio de taskStatus se hace una nueva renderizacion de tasks para mostrar si la tarea se completo
 
   useEffect(() => {
-    console.log("aca esta daysonmonth", daysOnMonth);
-  }, [daysOnMonth]);
+    if (!firstRender2) {
+      //setIsDaySelected(true);
+
+      if (!dayselected) {
+        console.log("dayselected1", dayselected);
+        setTodaysD(dayjs().format("YYYY-MM-DD"));
+        getTasksOnDate(dayjs().format("YYYY-MM-DD"));
+      } else {
+        console.log("dayselected2", dayselected);
+
+        // const newt = JSON.stringify(valuesArray[2]).split("T")[0].slice(1); //cambio formato hora
+        setTodaysD(dayjs(dayselected).format("DD MMM YYYY"));
+        getTasksOnDate(dayjs(dayselected).format("YYYY-MM-DD"));
+      }
+    } else {
+      //setIsDaySelected(true);
+
+      console.log("el FirstRender", daysOnMonth);
+
+      const todaysDate = dayjs().format("YYYY-MM-DD");
+      setTodaysD(dayjs().format("DD MMM YYYY"));
+      getTasksOnDate(todaysDate); //newdateformat= 2024-05-15
+      setFirstRender2(false); // Si es la primera renderización, marca que ya no lo es
+    }
+  }, [taskStatus]);
+
+  const handleCalendarDisplay = () => {
+    setVisibleCalendar(!visibleCalendar);
+  };
 
   return (
     <>
-      <div className="bg-slate-500">
-        <CalendarMUI daysonmonth={daysOnMonth} />
+      <div className="bg-slate-500 relative">
+        {visibleCalendar ? (
+          <CalendarMUI daysonmonth={daysOnMonth} />
+        ) : (
+          <div
+            onClick={handleCalendarDisplay}
+            className="bg-slate-500 h-5 relative hover:bg-slate-700 ml-3 text-slate-300 pb-6"
+          >
+            Show-Calendar
+          </div>
+        )}
+        <button
+          onClick={handleCalendarDisplay}
+          className="absolute right-4 bottom-0 hover:text-slate-700"
+        >
+          {visibleCalendar ? "▲" : "▼"}
+        </button>
       </div>
       <section className="flex justify-center gap-5 my-1">
-        <h1 className="font-bold text-xl text-gray-400">{todaysD}</h1>
+        <h1 className="font-bold text-3xl text-gray-400">{todaysD}</h1>
         <ButtonLink to="/add-task" style={{}}>
           Add Task
         </ButtonLink>

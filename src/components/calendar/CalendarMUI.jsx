@@ -23,7 +23,17 @@ function ServerDay(props) {
     <Badge
       key={props.day.toString()}
       overlap="circular"
-      badgeContent={isSelected ? <WysiwygIcon /> : undefined}
+      badgeContent={
+        isSelected ? (
+          <WysiwygIcon
+            className="hover:bg-white"
+            sx={{
+              width: 20,
+              color: "success.main",
+            }}
+          />
+        ) : undefined
+      }
       anchorOrigin={{
         //icon location
         vertical: "top",
