@@ -12,6 +12,8 @@ import { getTasksRequestByDate } from "../../api/tasks.js";
 dayjs().format();
 
 function ServerDay(props) {
+  const { setDaySelected } = useContext(SelectedDateContext);
+  const [displayDate, setDisplayDate] = useState(0);
   // from MUI documentation
   const { highlightedDays = [], day, outsideCurrentMonth, ...other } = props;
 
@@ -19,6 +21,19 @@ function ServerDay(props) {
     !props.outsideCurrentMonth &&
     highlightedDays.indexOf(props.day.date()) >= 0;
 
+  const handleBadgeClick = () => {
+    console.log("badge clicked");
+  };
+
+  const printDate = (dayselectedCalendar) => {
+    const valuesArray = Object.values(dayselectedCalendar);
+    setDaySelected(dayselectedCalendar);
+    const newt = JSON.stringify(valuesArray[2]).split("T")[0].slice(1);
+
+    setDisplayDate(newt);
+    console.log("new date", newt);
+    //getTasksRequestByDate(newt);
+  };
   return (
     <Badge
       key={props.day.toString()}
@@ -26,6 +41,7 @@ function ServerDay(props) {
       badgeContent={
         isSelected ? (
           <WysiwygIcon
+            onClick={printDate}
             className="hover:bg-white"
             sx={{
               width: 20,
