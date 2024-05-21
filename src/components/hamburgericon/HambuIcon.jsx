@@ -104,16 +104,6 @@ const HamburIcon = ({ logout }) => {
               <button className="bg-gray-500 text-white p-2 rounded hover:bg-slate-600 hover:border-2 hover:border-cyan-500">
                 Enter Code
               </button>
-              <button className="bg-gray-500 text-white p-2 rounded hover:bg-slate-600 hover:border-2 hover:border-cyan-500">
-                Log out
-              </button>
-              <Link
-                className="bg-gray-500 text-white p-2 rounded hover:bg-slate-600 hover:border-2 hover:border-cyan-500"
-                to="/"
-                onClick={() => logout()}
-              >
-                Logout
-              </Link>
             </div>
           </div>
         </div>

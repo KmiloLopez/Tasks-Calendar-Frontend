@@ -3,6 +3,7 @@ import { useAuth } from "../context/authContext";
 import { ButtonLink } from "./ui/ButtonLink";
 import { useState } from "react";
 import HamburIcon from "./hamburgericon/HambuIcon";
+import AccountMenu from "./menu/Menu";
 
 export function Navbar() {
   const { isAuthenticated, logout, user } = useAuth();
@@ -21,9 +22,8 @@ export function Navbar() {
       <ul className="flex gap-x-3 items-end">
         {isAuthenticated ? (
           <>
-            <li className="text-3xl">{user.username}</li>
             <li>
-              <HamburIcon logout={logout} />
+              <AccountMenu user={user} logout={logout} />
             </li>
           </>
         ) : (
