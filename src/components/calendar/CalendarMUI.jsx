@@ -12,28 +12,18 @@ import { getTasksRequestByDate } from "../../api/tasks.js";
 dayjs().format();
 
 function ServerDay(props) {
-  const { setDaySelected } = useContext(SelectedDateContext);
-  const [displayDate, setDisplayDate] = useState(0);
-  // from MUI documentation
-  const { highlightedDays = [], day, outsideCurrentMonth, ...other } = props;
+  const {
+    highlightedDays = [],
+    day,
+    outsideCurrentMonth,
+    onBadgeClick,
+    ...other
+  } = props;
 
   const isSelected =
     !props.outsideCurrentMonth &&
     highlightedDays.indexOf(props.day.date()) >= 0;
 
-  const handleBadgeClick = () => {
-    console.log("badge clicked");
-  };
-
-  const printDate = (dayselectedCalendar) => {
-    const valuesArray = Object.values(dayselectedCalendar);
-    setDaySelected(dayselectedCalendar);
-    const newt = JSON.stringify(valuesArray[2]).split("T")[0].slice(1);
-
-    setDisplayDate(newt);
-    console.log("new date", newt);
-    //getTasksRequestByDate(newt);
-  };
   return (
     <Badge
       key={props.day.toString()}
@@ -41,17 +31,18 @@ function ServerDay(props) {
       badgeContent={
         isSelected ? (
           <WysiwygIcon
-            onClick={printDate}
-            className="hover:bg-white"
+            onClick={() => onBadgeClick(day)}
             sx={{
               width: 20,
               color: "success.main",
+              "&:hover": {
+                cursor: "pointer",
+              },
             }}
           />
         ) : undefined
       }
       anchorOrigin={{
-        //icon location
         vertical: "top",
         horizontal: "left",
       }}
@@ -70,9 +61,6 @@ const CalendarMUI = ({ daysonmonth }) => {
   const { dayselected, setDaySelected, setSelectedMonthYear } =
     useContext(SelectedDateContext);
   const [displayDate, setDisplayDate] = useState(0);
-  const test = {
-    $D: "5",
-  };
 
   useEffect(() => {
     if (daysonmonth) {
@@ -87,31 +75,53 @@ const CalendarMUI = ({ daysonmonth }) => {
 
     setDisplayDate(newt);
     console.log("new date", newt);
-    //getTasksRequestByDate(newt);
   };
+
   const handleMonthChange = (date) => {
     setSelectedMonthYear(date.$d);
-    // setSelectedMonthYear({
-    //   month: date.getMonth() + 1, // Los meses en JavaScript van de 0 a 11, por eso se suma 1
-    //   year: date.getFullYear(),
-    // });
   };
 
   return (
-    <>
-      <DateCalendar
-        onMonthChange={handleMonthChange}
-        onChange={printDate}
-        slots={{
-          day: ServerDay,
-        }}
-        slotProps={{
-          day: {
-            highlightedDays,
+    <DateCalendar
+      sx={{
+        "& .MuiPickersDay-today": {
+          borderColor: "success.main",
+        },
+        "& .MuiPickersDay-root.Mui-selected": {
+          backgroundColor: "success.hover",
+          color: "white",
+          "&:hover": {
+            backgroundColor: "success.main",
           },
-        }}
-      />
-    </>
+        },
+        "& .MuiPickersDay-root": {
+          //color: "white",
+          fontSize: "1rem",
+          "&:hover": {
+            backgroundColor: "success.main",
+          },
+        },
+        "& .MuiDayCalendar-weekDayLabel": {
+          fontSize: "1rem",
+          //color: "white",
+        },
+        "& .MuiPickersCalendarHeader-label": {
+          fontSize: "1.5rem",
+          color: "#173A5E",
+        },
+      }}
+      onMonthChange={handleMonthChange}
+      onChange={printDate}
+      slots={{
+        day: ServerDay,
+      }}
+      slotProps={{
+        day: {
+          highlightedDays,
+          onBadgeClick: printDate,
+        },
+      }}
+    />
   );
 };
 

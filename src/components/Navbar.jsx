@@ -15,20 +15,13 @@ export function Navbar() {
 
   return (
     <nav className="bg-zinc-700 my-3 flex justify-between py-3 px-3 rounded-lg">
-      <h1 className="text-2xl font-bold">
+      <h1 className="text-3xl font-bold">
         <Link to={isAuthenticated ? "/tasks" : "/"}>Task Manager</Link>
       </h1>
-      <ul className="flex gap-x-2">
+      <ul className="flex gap-x-3 items-end">
         {isAuthenticated ? (
           <>
-            <li>Welcome {user.username}</li>
-
-            {/* cuando le doy click redir a home('/') y ejecuta funcion logout */}
-            <li>
-              <Link to="/" onClick={() => logout()}>
-                Logout
-              </Link>
-            </li>
+            <li className="text-3xl">{user.username}</li>
             <li>
               <HamburIcon logout={logout} />
             </li>

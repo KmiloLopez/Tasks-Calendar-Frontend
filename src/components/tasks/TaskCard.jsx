@@ -123,7 +123,7 @@ export function TaskCard({ task }) {
         </p>
       </section>
       <section
-        className={`text-1xl font-bold ${backgroundColorClass} rounded w-1/3`}
+        className={`text-1xl font-bold ${backgroundColorClass} rounded w-1/2`}
       >
         <p>Priority: {task.priority}</p>
       </section>

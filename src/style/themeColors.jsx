@@ -15,6 +15,7 @@ const theme = createTheme({
     },
     success: {
       main: "#0bb6c2",
+      hover: "#7abec2",
     },
     completed: {
       main: "#22c55e",
