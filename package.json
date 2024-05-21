@@ -1,12 +1,15 @@
 {
   "name": "vite-template-react",
   "version": "1.4.0",
-  "scripts": {
-    "start": "vite --port 3000 --open",
-    "dev": "vite --port 3000 --open",
+
+   "scripts": {
+    
+   "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview",
-    "test": "vitest"
+    "preview": "vite preview",
+    "start": "serve dist -s -n -l -p $PORT"
+   
+    
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
