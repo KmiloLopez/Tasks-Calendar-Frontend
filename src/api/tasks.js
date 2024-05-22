@@ -1,9 +1,15 @@
 import axios from "./axios"; //"./axios es una llamada a la instancia directamente"
 //Peticiones relacionadas a tasks
 
-export const getTasksRequest = async () => axios.get("/tasks");
+export const getTasksRequest = async () =>
+  axios.get("/tasks", {
+    withCredentials: true,
+  });
 
-export const createTaskRequest = async (task) => axios.post("/tasks", task);
+export const createTaskRequest = async (task) =>
+  axios.post("/tasks", task, {
+    withCredentials: true,
+  });
 //Axios ya incluye las especificacionde de credentials: 'include' para permitir el paso de cookies del navegador
 
 //aca vemos la alternativa con fetch para esta misma peticion:
@@ -35,14 +41,23 @@ export const createTaskRequest = async (task) => axios.post("/tasks", task);
 // };
 
 export const updateTaskRequest = async (id, task) =>
-  axios.put(`/tasks/${id}`, task);
+  axios.put(`/tasks/${id}`, task, {
+    withCredentials: true,
+  });
 
 export const deleteTaskRequest = async (id) => axios.delete(`/tasks/${id}`);
 
-export const getTaskRequest = async (id) => axios.get(`/tasks/${id}`);
+export const getTaskRequest = async (id) =>
+  axios.get(`/tasks/${id}`, {
+    withCredentials: true,
+  });
 
 export const getTasksRequestByDate = async (id) =>
-  axios.get(`/tasks/date/${id}`);
+  axios.get(`/tasks/date/${id}`, {
+    withCredentials: true,
+  });
 
 export const getMonthTasksRequestByDate = async (id) =>
-  axios.get(`/tasks/month/${id}`);
+  axios.get(`/tasks/month/${id}`, {
+    withCredentials: true,
+  });
