@@ -8,7 +8,7 @@
    "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "start": "serve dist -s -n -l -p $PORT"
+    "start": "serve dist -n -l -p $PORT"
    
     
   },
