@@ -16,8 +16,8 @@ export function Navbar() {
 
   return (
     <nav className="bg-zinc-700 my-3 flex justify-between py-3 px-3 rounded-lg items-center">
-      <h1 className="text-3xl font-bold">
-        <Link to={isAuthenticated ? "/tasks" : "/"}>CAMILARY</Link>
+      <h1 className="text-4xl font-bold">
+        <Link to={isAuthenticated ? "/tasks" : "/"}>CALENDOR</Link>
       </h1>
       <ul className="flex gap-x-3 items-end">
         {isAuthenticated ? (
