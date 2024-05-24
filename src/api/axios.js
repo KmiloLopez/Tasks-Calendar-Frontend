@@ -6,17 +6,20 @@ const instance = axios.create({
   withCredentials: true, //para que pueda establecer las cookies y las podamos ver tambien en el frontend
 });
 // Interceptor de solicitudes para agregar el token a los encabezados
-instance.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  },
-);
+if (localStorage.getItem("token")) {
+  console.log("si hay token");
+  instance.interceptors.request.use(
+    (config) => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    },
+  );
+}
 
 export default instance;
